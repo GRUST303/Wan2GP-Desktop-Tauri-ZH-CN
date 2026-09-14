@@ -1,0 +1,20 @@
+name: Validate localization plugin
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Python plugin syntax
+        run: python -m py_compile plugin.py
+      - name: Validate plugin metadata JSON
+        run: python -c "import json; json.load(open('plugin_info.json', encoding='utf-8')); print('plugin_info.json OK')"
+      - name: Validate Tauri localization JavaScript
+        run: node --check tauri_patch/src/i18n-zh-cn.js
