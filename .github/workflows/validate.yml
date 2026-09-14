@@ -22,24 +22,29 @@ jobs:
       - name: Validate Chinese locale JSON packs
         run: |
           python - <<'PY'
-          import json
-          for path in ('locales/zh_CN.json', 'locales/zh_CN_v3.json', 'locales/zh_CN_v4.json'):
+          import glob, json
+          for path in sorted(glob.glob('locales/zh_CN*.json')):
               pack = json.load(open(path, encoding='utf-8'))
-              assert isinstance(pack.get('exact'), dict)
+              assert isinstance(pack.get('exact', {}), dict)
+              assert isinstance(pack.get('attributes', {}), dict)
               assert isinstance(pack.get('patterns', []), list)
               assert isinstance(pack.get('pure_overrides', {}), dict)
+              assert isinstance(pack.get('fragments', {}), dict)
               print(path, 'OK')
           PY
 
-      - name: Extract and validate injected plugin JavaScript
+      - name: Validate localization JavaScript
+        run: node --check web/localization.js
+
+      - name: Validate assembled injected JavaScript
         run: |
           python - <<'PY'
-          import re
-          text = open('plugin.py', encoding='utf-8').read()
-          match = re.search(r"template = r'''(.*?)'''\n\s*return template", text, re.S)
-          assert match, 'Could not find injected JS template'
-          js = match.group(1).replace('__LOCALE__', '{"exact":{},"attributes":{},"patterns":[],"pure_overrides":{}}')
-          open('/tmp/wangp-zh-plugin.js', 'w', encoding='utf-8').write(js)
+          import json
+          from pathlib import Path
+          js = Path('web/localization.js').read_text(encoding='utf-8')
+          js = js.replace('__LOCALE__', json.dumps({"exact":{},"attributes":{},"patterns":[],"pure_overrides":{},"fragments":{}}))
+          js = js.replace('__PLUGIN_VERSION__', '0.0.0-test')
+          Path('/tmp/wangp-zh-plugin.js').write_text(js, encoding='utf-8')
           PY
           node --check /tmp/wangp-zh-plugin.js
 
