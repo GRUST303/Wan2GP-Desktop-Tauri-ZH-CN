@@ -1,8 +1,8 @@
 {
-  "name": "WanGP 简体中文双语汉化",
+  "name": "WanGP 简体中文 / 双语界面",
   "author": "GRUST303",
-  "version": "0.2.0",
-  "description": "Simplified Chinese bilingual localization for WanGP v13. Chinese-first UI while preserving English technical terms such as VRAM, CUDA, VAE, INT8, Steps and Guidance.",
+  "version": "0.3.0",
+  "description": "Simplified Chinese localization for WanGP v13 with three UI modes: Chinese, Chinese+English technical terms, and original English. Includes same-origin iframe localization and an untranslated-text scanner.",
   "type": ["extension"],
   "date": "2026-09-14",
   "wan2gp_version": "13.0",
