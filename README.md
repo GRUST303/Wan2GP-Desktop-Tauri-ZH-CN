@@ -22,9 +22,9 @@ https://github.com/GRUST303/Wan2GP-Desktop-Tauri-ZH-CN
 
 已安装旧版本时，优先在 Plugin Manager 中点 **Update**；如果没有出现更新按钮，可卸载插件后使用同一个 GitHub URL 重新安装。
 
-## v0.3.0：三档语言切换
+## v0.4.0：下拉框已选值 + 更可靠的“未译”扫描
 
-页面右下角会显示：
+页面右下角仍显示：
 
 ```text
 中文 | 中英 | EN | 未译
@@ -33,9 +33,35 @@ https://github.com/GRUST303/Wan2GP-Desktop-Tauri-ZH-CN
 - `中文`：纯中文模式。
 - `中英`：中文 + 英文技术术语模式，也是推荐模式。
 - `EN`：原始英文，不执行翻译。
-- `未译`：扫描**当前已打开页面**仍未覆盖的英文 UI，并提供“一键复制”。把结果贴到 GitHub Issue 即可补词，不需要把每个页面都截图。
+- `未译`：扫描当前**真正可见**的页面，并把残留分成 `UI 文本` 与 `文档 / 长说明` 两组。
 
-语言模式保存在浏览器本地，刷新或重启后会继续使用上次选择。
+### 为什么下拉框以前“展开有中文、收起又变英文”？
+
+Gradio 的很多 Dropdown / ComboBox 实际上有两套显示层：
+
+1. 展开的候选列表是普通文本节点，所以之前已经能被翻译；
+2. 收起后的当前选中值通常放在独立的 `input/combobox` value 中，不属于普通文本节点。
+
+v0.4.0 增加了对 combobox 当前显示值的单独本地化。插件只改**显示值**，不会改下拉框对应的真实配置值；当用户打开下拉框进行搜索/选择时，会临时恢复原始英文值，关闭后再显示中文或中英版本，尽量避免影响 Gradio 的选择逻辑。
+
+### “2599 条未译”为什么会这么多？
+
+旧扫描器会把隐藏 Tab、折叠区域、帮助文档、Guides 长文章甚至部分内部字符串一起算进去，因此数量远大于当前屏幕上真正需要翻译的 UI。
+
+v0.4.0 现在会过滤：
+
+- 隐藏 Tab / `display:none`
+- `aria-hidden` / `hidden` / `inert`
+- 没有可见布局区域的元素
+- 当前不可见 iframe
+- 明显路径、文件名、命令参数、内部 snake_case 标识和连接词
+
+并把结果拆成：
+
+- **UI 文本**：优先处理，按钮、标签、选项、当前下拉值等；
+- **文档 / 长说明**：Guides、帮助文章、长解释单独处理。
+
+以后反馈时优先复制 `UI 文本` 就够了，通常会比旧版的几千条小很多。
 
 ## 翻译覆盖
 
@@ -43,17 +69,16 @@ https://github.com/GRUST303/Wan2GP-Desktop-Tauri-ZH-CN
 
 - Media Generator / MiniMax H3 常用生成参数
 - Mask Generator / MatAnyone
-- Motion Designer
+- Motion Designer（含同源 iframe）
 - Guides / Model Overview
 - Configuration → General
 - Configuration → Performance
 - Configuration → Extensions
-- Configuration → Prompt Enhancer / Deepy 常用项
-- 模型 / LoRA / 队列 / 音频 / 后处理 / VRAM / 量化 / Attention 等公共字段
+- Configuration → Prompt Enhancer / Deepy
+- Model / Finetune / LoRA / Queue / Audio / Postprocessing
+- VRAM / RAM / Quantization / Attention / VAE / Text Encoder 等公共技术字段
 
-### Motion Designer 为什么 v0.3 改善很大？
-
-Motion Designer 实际运行在 WanGP 页面内部的独立同源 `iframe` 中。v0.1/v0.2 的主页面 DOM 翻译无法完整进入这个 iframe；v0.3 增加了 iframe 文档发现、`load` 监听和独立 `MutationObserver`，因此可以翻译其中的 `Scene Settings`、`Object Animation`、`Trajectory`、`Preview Mask` 等界面文本。
+v0.4.0 新增了大量实际页面残留词条，并继续采用“安全精确匹配优先”的策略；模型名、文件名和用户输入不会被机械翻译。
 
 ## 翻译风格
 
@@ -86,6 +111,7 @@ Motion Designer 实际运行在 WanGP 页面内部的独立同源 `iframe` 中�
 ```text
 locales/zh_CN.json
 locales/zh_CN_v3.json
+locales/zh_CN_v4.json
 ```
 
 欢迎通过 PR / Issue 补充翻译。
@@ -104,7 +130,7 @@ tauri_patch/
 
 ## 当前版本
 
-- Plugin：`0.3.0`
+- Plugin：`0.4.0`
 - 适配基线：WanGP `13.0`
 - 发布日期：2026-09-14
 
