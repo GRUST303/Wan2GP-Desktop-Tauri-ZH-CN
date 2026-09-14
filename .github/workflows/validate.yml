@@ -16,5 +16,7 @@ jobs:
         run: python -m py_compile plugin.py
       - name: Validate plugin metadata JSON
         run: python -c "import json; json.load(open('plugin_info.json', encoding='utf-8')); print('plugin_info.json OK')"
+      - name: Validate Chinese locale JSON
+        run: python -c "import json; p=json.load(open('locales/zh_CN.json', encoding='utf-8')); assert p.get('exact'); assert p.get('patterns') is not None; print('locales/zh_CN.json OK')"
       - name: Validate Tauri localization JavaScript
         run: node --check tauri_patch/src/i18n-zh-cn.js
