@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 - 2026-09-14
+
+- 新增三档界面模式：`中文`（纯中文）、`中英`（中文 + 英文技术术语）、`EN`（原始英文）。
+- 新增右下角分段语言切换 UI，模式保存在浏览器 `localStorage`，刷新/重启后保持。
+- 新增同源 `iframe` 翻译与监听，重点修复 **Motion Designer** 独立 iframe 内大量文字无法汉化的问题。
+- 新增 `未译` 扫描器：自动收集当前页面仍未覆盖的英文 UI，可一键复制，用于 Issue/词库补充，不再要求逐页截图。
+- 大幅补充 MiniMax H3 主生成页、Mask Generator、Motion Designer、Guides Overview、Configuration → General / Performance / Extensions / Prompt Enhancer 常用文案。
+- 对 Guides 中较长的英文说明使用中文摘要式翻译，避免界面过度拥挤。
+- 保留模型名、CUDA、VRAM、VAE、INT8、LoRA 等必要技术名；纯中文模式会尽量移除普通字段后的英文括注。
+
 ## 0.2.0 - 2026-09-14
 
 - 针对 WanGP v13.0 主界面补充大量实际 UI 文案翻译。
