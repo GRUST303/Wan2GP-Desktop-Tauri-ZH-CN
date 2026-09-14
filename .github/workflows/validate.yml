@@ -12,11 +12,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Validate Python plugin syntax
         run: python -m py_compile plugin.py
+
       - name: Validate plugin metadata JSON
         run: python -c "import json; json.load(open('plugin_info.json', encoding='utf-8')); print('plugin_info.json OK')"
-      - name: Validate Chinese locale JSON
-        run: python -c "import json; p=json.load(open('locales/zh_CN.json', encoding='utf-8')); assert p.get('exact'); assert p.get('patterns') is not None; print('locales/zh_CN.json OK')"
+
+      - name: Validate Chinese locale JSON packs
+        run: |
+          python - <<'PY'
+          import json
+          for path in ('locales/zh_CN.json', 'locales/zh_CN_v3.json'):
+              pack = json.load(open(path, encoding='utf-8'))
+              assert isinstance(pack.get('exact'), dict)
+              assert isinstance(pack.get('patterns', []), list)
+              print(path, 'OK')
+          PY
+
+      - name: Extract and validate injected plugin JavaScript
+        run: |
+          python - <<'PY'
+          import re
+          text = open('plugin.py', encoding='utf-8').read()
+          match = re.search(r"template = r'''(.*?)'''\n\s*return template", text, re.S)
+          assert match, 'Could not find injected JS template'
+          js = match.group(1).replace('__LOCALE__', '{"exact":{},"attributes":{},"patterns":[],"pure_overrides":{}}')
+          open('/tmp/wangp-zh-plugin.js', 'w', encoding='utf-8').write(js)
+          PY
+          node --check /tmp/wangp-zh-plugin.js
+
       - name: Validate Tauri localization JavaScript
         run: node --check tauri_patch/src/i18n-zh-cn.js
