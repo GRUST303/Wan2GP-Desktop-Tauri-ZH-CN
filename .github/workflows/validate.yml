@@ -23,10 +23,11 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          for path in ('locales/zh_CN.json', 'locales/zh_CN_v3.json'):
+          for path in ('locales/zh_CN.json', 'locales/zh_CN_v3.json', 'locales/zh_CN_v4.json'):
               pack = json.load(open(path, encoding='utf-8'))
               assert isinstance(pack.get('exact'), dict)
               assert isinstance(pack.get('patterns', []), list)
+              assert isinstance(pack.get('pure_overrides', {}), dict)
               print(path, 'OK')
           PY
 
