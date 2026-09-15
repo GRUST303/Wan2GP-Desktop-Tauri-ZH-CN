@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0 - 2026-09-15
+
+- 新增 `locales/zh_CN_v6.json`，根据实际“未译累计报告”继续补 MiniMax H3 常用界面。
+- 重点汉化 H3 长视频 / Sliding Window：窗口大小、窗口重叠、自动启用说明、按行 / 按段落分配滑动窗口等。
+- 补充 `An H3 Prompt from Text`、`An H3 Prompt from Text + Start Image`、H3 FL2VA Prompt Structure 等写作增强与帮助文本。
+- 补充 H3 Prompt Help 中的镜头连接、硬切、首尾帧、duration / overlap 说明及跨镜头一致性提示。
+- 补充 Attention、Memory Profile、DLSS、SeedVR2、VAE、Denoising、生成进度等动态 UI 文本。
+- 补充 Add workspace、Extract Settings、Extend this Sample、To Control Video、To Video Source 等高频操作。
+- README 增加 WanGP 中文 / WanGP 汉化 / Wan2GP 中文 / MiniMax H3 中文等中英文检索词，并补充 GitHub Topics 建议，改善仓库发现性。
+- 插件版本更新为 `0.6.0`。
+
 ## 0.5.0 - 2026-09-14
 
 - 重构前端注入：把大型 JavaScript 从 `plugin.py` 拆到 `web/localization.js`，后续维护和 CI 检查更简单。
