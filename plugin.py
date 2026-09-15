@@ -4,13 +4,14 @@ import os
 from shared.utils.plugins import WAN2GPPlugin
 
 
-PLUGIN_VERSION = "0.5.0"
+PLUGIN_VERSION = "0.6.0"
 ROOT = os.path.dirname(__file__)
 LOCALE_PATHS = (
     os.path.join(ROOT, "locales", "zh_CN.json"),
     os.path.join(ROOT, "locales", "zh_CN_v3.json"),
     os.path.join(ROOT, "locales", "zh_CN_v4.json"),
     os.path.join(ROOT, "locales", "zh_CN_v5.json"),
+    os.path.join(ROOT, "locales", "zh_CN_v6.json"),
 )
 JS_PATH = os.path.join(ROOT, "web", "localization.js")
 
@@ -53,7 +54,8 @@ class WanGPChineseBilingualPlugin(WAN2GPPlugin):
         self.version = PLUGIN_VERSION
         self.description = (
             "WanGP v13 简体中文本地化。支持纯中文 / 中英双语 / 原始英文三种模式；"
-            "支持动态模型说明、帮助弹窗、同源 iframe、下拉框选中值，以及按栏目持久累计的未译扫描器。"
+            "支持 MiniMax H3 滑动窗口、Prompt 帮助、动态模型说明、同源 iframe、下拉框选中值，"
+            "以及按栏目持久累计的未译扫描器。"
         )
         self.type = ["extension"]
 
