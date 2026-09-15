@@ -1,10 +1,10 @@
 {
   "name": "WanGP 简体中文 / 双语界面",
   "author": "GRUST303",
-  "version": "0.5.0",
-  "description": "Simplified Chinese localization for WanGP v13 with Chinese, bilingual, and English modes. Adds dynamic model/help localization and a persistent untranslated scanner grouped by page/model.",
+  "version": "0.6.0",
+  "description": "Simplified Chinese localization for WanGP / Wan2GP v13. Chinese, bilingual and English modes, MiniMax H3 sliding-window UI/help localization, dynamic model descriptions, prompt help, and a persistent untranslated scanner.",
   "type": ["extension"],
-  "date": "2026-09-14",
+  "date": "2026-09-15",
   "wan2gp_version": "13.0",
   "url": "https://github.com/GRUST303/Wan2GP-Desktop-Tauri-ZH-CN"
 }
