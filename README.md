@@ -1,8 +1,12 @@
-# WanGP 简体中文 / 双语界面
+# WanGP 中文 / Wan2GP 汉化插件
 
-面向 **WanGP / Wan2GP v13** 的第三方简体中文本地化插件。
+**Simplified Chinese localization for WanGP / Wan2GP / MiniMax H3**
 
-> **非官方项目 / Unofficial community localization.** 上游：<https://github.com/deepbeepmeep/Wan2GP>
+这是一个面向 **WanGP / Wan2GP v13** 的第三方简体中文本地化插件，目标是降低中文用户使用 WanGP、MiniMax H3、本地 AI 视频生成模型时的语言门槛。
+
+如果你正在搜索 **WanGP 中文、WanGP 汉化、Wan2GP 中文、Wan2GP 汉化、MiniMax H3 中文界面、MiniMax H3 汉化、WanGP Chinese、WanGP Simplified Chinese、WanGP localization**，这个项目就是为这些场景准备的。
+
+> **非官方项目 / Unofficial community localization.** 上游项目：<https://github.com/deepbeepmeep/Wan2GP>
 
 ## 安装 / 更新
 
@@ -12,19 +16,38 @@
 https://github.com/GRUST303/Wan2GP-Desktop-Tauri-ZH-CN
 ```
 
-安装或更新后请**完全重启 WanGP**；浏览器仍缓存旧前端时再按 `Ctrl + F5`。
+安装或更新后请**完全重启 WanGP**；如果浏览器仍缓存旧前端，再按 `Ctrl + F5`。
 
-## 三种显示模式
+## 功能概览
 
-右下角提供：
+右下角提供四种入口：
 
 ```text
 中文 | 中英 | EN | 未译
 ```
 
-- **中文**：尽量只显示中文；模型名、CUDA、VRAM、VAE、INT8、LoRA 等必要技术名保留。
-- **中英**：中文优先，同时保留英文技术字段，方便对照教程和 GitHub Issue。
+- **中文**：尽量只显示中文；模型名、CUDA、VRAM、VAE、INT8、LoRA、GGUF、Attention 等必要技术名保留。
+- **中英**：中文优先，同时保留英文技术字段，方便对照教程、模型文档与 GitHub Issue。
 - **EN**：恢复 WanGP 原始英文界面。
+- **未译**：扫描当前页面仍未覆盖的英文 UI，并按栏目 / 模型持续累计，方便继续补翻译。
+
+## v0.6.0：MiniMax H3 长视频 / 滑动窗口重点汉化
+
+v0.6 根据实际使用中的未译累计报告，重点补充 MiniMax H3 长视频与高级生成界面，包括：
+
+- `A Sliding Window allows you to generate video with a duration not limited by the Model`
+- `Windows Frames Overlap`
+- `All the Lines are Part of the Same Prompt`
+- `Each Line Will be used for a new Sliding Window...`
+- `Each Paragraph Separated by an Empty line...`
+- `An H3 Prompt from Text`
+- `An H3 Prompt from Text + Start Image`
+- `H3 FL2VA prompt structure`
+- H3 Prompt Help 中的镜头连接、滑动窗口长度、硬切、首帧 / 尾帧说明
+- Attention / Memory Profile / DLSS / SeedVR2 / VAE / Denoising 等常见动态 UI 与进度文本
+- Add workspace、Extract Settings、Extend this Sample、To Control Video、To Video Source 等常用操作
+
+技术名和真实参数值仍保持原样，插件只改变可见文字，不修改 WanGP 的生成参数。
 
 ## v0.5.0：动态说明 + 按栏目持久累计的“未译”采集
 
@@ -40,7 +63,7 @@ v0.5 增加三层翻译机制：
 
 ### Prompt “深入了解” / 帮助弹窗
 
-动态 `dialog` / help UI 现在同样受监听。`Prompt Help`、`Prompts Guide`、宏、注释、空行拆分规则等已加入 v0.5 词库。
+动态 `dialog` / help UI 同样受监听。`Prompt Help`、`Prompts Guide`、宏、注释、空行拆分规则等已经加入词库。
 
 ### “未译”不再切页清空
 
@@ -65,7 +88,7 @@ v0.5 增加三层翻译机制：
 - `包含文档 / 长说明`
 - `自动累计（切换栏目 / 模型后自动记录）`
 
-建议先不开“文档 / 长说明”，在各栏目和模型里快速点一遍；最后点 **复制累计**，即可一次把按栏目分组的残留发到 GitHub Issue。
+建议先不开“文档 / 长说明”，在各栏目和模型里快速点一遍；最后点 **复制累计**，即可一次获得按栏目分组的残留文本。
 
 ## 下拉框安全策略
 
@@ -81,14 +104,17 @@ Gradio Dropdown 展开候选项和收起后的选中值并不是同一层 DOM。
 
 目前重点覆盖：
 
-- Media Generator / MiniMax H3
-- 动态模型说明与 Prompt Help 弹窗
+- **Media Generator / 媒体生成器**
+- **MiniMax H3 FL2VA / Ref2VA / PDD / VDN**
+- **H3 Sliding Window / 长视频滑动窗口**
+- **H3 Prompt Help / Prompt Enhancer / 写作增强**
+- 动态模型说明与帮助弹窗
 - Mask Generator / MatAnyone
 - Motion Designer（含同源 iframe）
 - Guides / Model Overview / Prompts / Processing
 - Configuration → General / Performance / Extensions / Prompt Enhancer / Deepy
 - Model / Finetune / LoRA / Queue / Audio / Postprocessing
-- VRAM / RAM / Quantization / Attention / VAE / Text Encoder 等公共技术字段
+- VRAM / RAM / Quantization / Attention / VAE / Text Encoder / GGUF 等公共技术字段
 
 词库：
 
@@ -97,12 +123,66 @@ locales/zh_CN.json
 locales/zh_CN_v3.json
 locales/zh_CN_v4.json
 locales/zh_CN_v5.json
+locales/zh_CN_v6.json
 ```
 
 前端逻辑从 v0.5 起位于：
 
 ```text
 web/localization.js
+```
+
+## 谁适合使用
+
+这个插件主要面向：
+
+- 使用 **WanGP / Wan2GP** 的中文用户；
+- 在本地运行 **MiniMax H3**、Wan、Hunyuan Video 等视频生成模型的用户；
+- 使用 RTX 30 / 40 / 50 系显卡进行本地 AI 视频生成的人；
+- 想理解 Sliding Window、PDD、VDN、SeedVR2、DLSS、GGUF、Text Encoder 等设置，但不想完全依赖英文界面的人；
+- 想保留英文技术名方便对照 B 站、YouTube、GitHub、Hugging Face 教程的人。
+
+## 搜索关键词 / Search Keywords
+
+下面这些关键词也是本项目覆盖的常见搜索叫法，方便 GitHub 与搜索引擎理解项目主题：
+
+```text
+WanGP 中文
+WanGP 汉化
+WanGP 中文插件
+WanGP 简体中文
+WanGP Chinese
+WanGP Chinese localization
+WanGP Simplified Chinese
+Wan2GP 中文
+Wan2GP 汉化
+Wan2GP Chinese
+MiniMax H3 中文
+MiniMax H3 汉化
+MiniMax H3 WanGP
+MiniMax H3 Chinese UI
+AI 视频生成 中文界面
+local AI video generation Chinese localization
+```
+
+> README 中增加关键词可以提升 GitHub 站内搜索和搜索引擎理解项目主题的机会，但是否、何时被 Google / Bing / 百度等收录仍由各搜索引擎决定，项目本身无法强制保证即时收录。
+
+## 建议的 GitHub Topics
+
+如果仓库设置页面允许，建议为项目添加这些 Topics，可进一步提高 GitHub 站内发现率：
+
+```text
+wangp
+wan2gp
+minimax-h3
+localization
+i18n
+chinese
+simplified-chinese
+translation
+video-generation
+gradio
+ai-video
 ```
 
 ## 安全边界
@@ -119,9 +199,9 @@ tauri_patch/
 
 ## 当前版本
 
-- Plugin：`0.5.0`
+- Plugin：`0.6.0`
 - 适配基线：WanGP `13.0`
-- 发布日期：2026-09-14
+- 发布日期：2026-09-15
 
 ## License
 
